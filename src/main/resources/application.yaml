@@ -1,0 +1,20 @@
+server:
+  port: 5000
+
+similar:
+  products:
+    url: http://localhost:3001
+
+feign:
+  client:
+    config:
+      similar-products:
+        connectTimeout: 1000
+        readTimeout: 51000
+        loggerLevel: basic
+logging:
+  file: SimilarProducts.log
+  config: classpath:logback-spring.xml
+
+
+
