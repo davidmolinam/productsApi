@@ -43,15 +43,7 @@ public class SimilarProductsControllerTest {
     }
 
     @Test
-    public void getProductSimilarOkNoData(){
-        doReturn(Lists.newArrayList()).when(similarProductsServiceMock).getSimilarProductsById(Mockito.anyString());
-        ResponseEntity<List<ProductDetailDto>> result = this.similarProductsController.getProductSimilar(Mockito.anyString());
-        Assert.assertEquals(HttpStatus.OK,result.getStatusCode());
-        Assert.assertTrue(CollectionUtils.isEmpty(result.getBody()));
-    }
-
-    @Test
-    public void getProductSimilarOk(){
+    public void getProductSimilar_200(){
         doReturn(Lists.newArrayList(productDetailDtoMock)).when(similarProductsServiceMock).getSimilarProductsById(Mockito.anyString());
         ResponseEntity<List<ProductDetailDto>> result = this.similarProductsController.getProductSimilar(Mockito.anyString());
         Assert.assertEquals(HttpStatus.OK,result.getStatusCode());
@@ -60,5 +52,12 @@ public class SimilarProductsControllerTest {
         Assert.assertEquals(productDetailDtoMock.getId(),result.getBody().get(0).getId());
         Assert.assertEquals(productDetailDtoMock.getName(),result.getBody().get(0).getName());
         Assert.assertEquals(productDetailDtoMock.getPrice(),result.getBody().get(0).getPrice());
+    }
+
+    @Test
+    public void getProductSimilar_400(){
+        doReturn(Lists.newArrayList()).when(similarProductsServiceMock).getSimilarProductsById(Mockito.anyString());
+        ResponseEntity<List<ProductDetailDto>> result = this.similarProductsController.getProductSimilar(Mockito.anyString());
+        Assert.assertEquals(HttpStatus.NOT_FOUND,result.getStatusCode());
     }
 }
